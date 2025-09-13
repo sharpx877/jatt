@@ -1,0 +1,32 @@
+name: Run sharp Workflow
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '*/30 * * * *'
+
+jobs:
+  run_sharp_workflow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v2
+
+      - name: Set permissions for binaries
+        run: |
+          chmod +x sharp
+          
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+
+      - name: Install required packages
+        run: |
+          pip install telebot flask aiogram python-telegram-bot pymongo aiohttp
+
+      - name: Run sharp.py
+        run: python3 sharp.py Attack Send With Full Power
